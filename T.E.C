@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html} lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="icon" href="C:\Users\Joshua Odejide\Desktop\GSE 301\images.jpeg" type="image/png">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <title>Group 14 GSE 301 TEC site Project </title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Open Sans';
+            }
+            
+            .navbar {
+                width: 100%;
+                position: relative;
+                z-index: -1;
+            }
+            
+            .navbar .nav-con {
+                width: 95%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: #474747;
+                margin: auto;
+            }
+            
+            .menu-wrap {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+            
+            .menu-wrap .toggler {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 2;
+                cursor: pointer;
+                width: 50px;
+                height: 50px;
+                opacity: 0;
+            }
+            
+            .menu-wrap .hamburger {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                width: 60px;
+                height: 60px;
+                padding: 1rem;
+                background: var(--primary-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            /* Hamburger Line */
+            
+            .menu-wrap .hamburger>div {
+                position: relative;
+                flex: none;
+                width: 100%;
+                height: 2px;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.4s ease;
+            }
+            /* Hamburger Lines - Top & Bottom */
+            
+            .menu-wrap .hamburger>div::before,
+            .menu-wrap .hamburger>div::after {
+                content: '';
+                position: absolute;
+                z-index: 1;
+                top: -10px;
+                width: 100%;
+                height: 2px;
+                background: inherit;
+            }
+            /* Moves Line Down */
+            
+            .menu-wrap .hamburger>div::after {
+                top: 10px;
+            }
+            /* Toggler Animation */
+            
+            .menu-wrap .toggler:checked+.hamburger>div {
+                transform: rotate(135deg);
+            }
+            /* Turns Lines Into X */
+            
+            .menu-wrap .toggler:checked+.hamburger>div:before,
+            .menu-wrap .toggler:checked+.hamburger>div:after {
+                top: 0;
+                transform: rotate(90deg);
+            }
+            /* Rotate On Hover When Checked */
+            
+            .menu-wrap .toggler:checked:hover+.hamburger>div {
+                transform: rotate(225deg);
+            }
+            /* Show Menu */
+            
+            .menu-wrap .toggler:checked~.menu {
+                visibility: visible;
+            }
+            
+            .menu-wrap .toggler:checked~.menu>div {
+                transform: scale(1);
+                transition-duration: var(--menu-speed);
+            }
+            
+            .menu-wrap .toggler:checked~.menu>div>div {
+                opacity: 1;
+                transition: opacity 0.4s ease 0.4s;
+            }
+            
+            .menu-wrap .menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                visibility: hidden;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+             :root {
+                --primary-color: rgba(13, 110, 139, 0.75);
+                --secondary-color: rgba(229, 148, 0, 0.9);
+                --overlay-color: rgba(24, 39, 51, 0.85);
+                --menu-speed: 0.75s;
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Roboto', sans-serif;
+                line-height: 1.4;
+            }
+            
+            .container {
+                max-width: 960px;
+                margin: auto;
+                overflow: hidden;
+                padding: 0 3rem;
+            }
+            
+            #showcase {
+                background: var(--primary-color);
+                color: #fff;
+                height: 100vh;
+                position: relative;
+            }
+            
+            #showcase:before {
+                content: '';
+                background: url('../img/showcase.jpg') no-repeat center center/cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+            
+            #showcase .showcase-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                height: 100%;
+            }
+            
+            #showcase h1 {
+                font-size: 4rem;
+            }
+            
+            #showcase p {
+                font-size: 1.3rem;
+            }
+            
+            .btn {
+                display: inline-block;
+                border: none;
+                background: var(--primary-color);
+                color: #fff;
+                padding: 0.75rem 1.5rem;
+                margin-top: 1rem;
+                transition: opacity 1s ease-in-out;
+                text-decoration: none;
+            }
+            
+            .btn:hover {
+                opacity: 0.7;
+            }
+            
+            .menu-wrap .menu>div {
+                background: var(--overlay-color);
+                border-radius: 50%;
+                width: 200vw;
+                height: 200vw;
+                display: flex;
+                flex: none;
+                align-items: center;
+                justify-content: center;
+                transform: scale(0);
+                transition: all 0.4s ease;
+            }
+            
+            .menu-wrap .menu>div>div {
+                text-align: center;
+                max-width: 90vw;
+                max-height: 100vh;
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            }
+            
+            .menu-wrap .menu>div>div>ul>li {
+                list-style: none;
+                color: #fff;
+                font-size: 1.5rem;
+                padding: 1rem;
+            }
+            
+            .menu-wrap .menu>div>div>ul>li>a {
+                color: inherit;
+                text-decoration: none;
+                transition: color 0.4s ease;
+            }
+            
+            .menu-wrap .menu>div>div>ul>li>a:hover {
+                color: var(--secondary-color);
+            }
+            
+            .brand-title {
+                font-size: 1.5rem;
+                margin: .5rem;
+            }
+            
+            .navbar-links ul {
+                padding: 0;
+                margin: 0;
+                display: flex;
+            }
+            
+            .navbar-links ul li {
+                list-style: none;
+            }
+            
+            .navbar-links ul li a {
+                text-decoration: none;
+                color: #474747;
+                padding: .5rem 1rem;
+                font-size: 16px;
+                display: block;
+            }
+            
+            .navbar-links ul li:hover {
+                background-color: #00ffff4d;
+                border-radius: 4px;
+            }
+            
+            #join-link {
+                background-color: #00AEFF;
+                color: #fff;
+                border-radius: 4px;
+            }
+            
+            .container {
+                width: 90%;
+                margin: auto;
+            }
+            /* Main styles */
+            
+            .intro-flex {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .intro-box {
+                width: 45%;
+            }
+            
+            .intro-box img {
+                width: 100%;
+            }
+            
+            .intro-txt {
+                width: 95%;
+                margin: 0 0 0 5rem;
+            }
+            
+            .intro-txt h1 {
+                color: #084482;
+                font-size: 40px;
+            }
+            
+            .intro-txt p {
+                color: #474747;
+                font-size: 22px;
+                line-height: 33px;
+            }
+            
+            main {
+                width: 100%;
+                margin: auto;
+            }
+            
+            .projects {
+                margin-top: 0;
+            }
+            
+            #no-margin {
+                padding-top: 0;
+            }
+            
+            .projects .project-con:nth-child(even) {
+                background: rgba(196, 196, 196, 0.1);
+            }
+            
+            .project-con {
+                margin: 1rem 0 0 0;
+                padding: 1rem 0;
+            }
+            
+            .box-con {
+                width: 90%;
+                display: flex;
+                margin: auto;
+                justify-content: space-between;
+            }
+            
+            .gate-img-div {
+                width: 100%;
+                margin: auto;
+            }
+            
+            .gate-img-div img {
+                width: 100%;
+                margin: auto;
+            }
+            
+            .box {
+                width: 45%;
+                padding: 1rem 0;
+                margin: auto;
+            }
+            
+            .box h2 {
+                color: #2f80d1;
+                font-size: 40px;
+                font-weight: 600;
+            }
+            
+            .txt p {
+                font-size: 20px;
+                line-height: 150.2%;
+                font-size: 18px;
+                color: #333333;
+                text-align: justify;
+                font-family: 'Open Sans';
+            }
+            
+            .btn-area input {
+                padding: 0.5rem;
+                border: none;
+                cursor: pointer;
+                border-radius: 4px;
+                color: #fff;
+                font-size: 14px;
+                background-color: #00AEFF;
+            }
+            
+            footer {
+                width: 100%;
+                padding-top: 3em;
+                background: #FAFAFA;
+            }
+            
+            .footer-div {
+                width: 85%;
+                margin: auto;
+            }
+            
+            .footer-items {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                padding: .5rem;
+                justify-content: space-between;
+            }
+            
+            .footer-item {
+                width: 25%;
+                color: #00AEFF;
+            }
+            
+            .footer-item ul {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .footer-item ul li {
+                list-style: none;
+                margin: .5rem 0;
+                color: #00AEFF;
+            }
+            
+            .footer-item ul li a {
+                text-decoration: none;
+                color: #00AEFF;
+            }
+            
+            #black a,
+            #black-txt a {
+                text-decoration: none;
+                color: #737373;
+            }
+            
+            .social-media-icons {
+                display: flex;
+            }
+            
+            .social-media-icons div {
+                padding: 1rem;
+                margin: 0.3rem;
+                border-radius: 50%;
+                background-color: #fff;
+            }
+            
+            .social-media-icons div i {
+                font-size: 20px;
+                color: #4567ee;
+            }
+            
+            .copyright-div {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .copyright-div p {
+                padding: 1rem;
+                color: #8898AA;
+                font-size: 20px;
+            }
+            /* End of Main styles */
+            
+            @media screen and (max-width: 990px) {
+                .container {
+                    width: 100%;
+                }
+            }
+            
+            @media (max-width: 900px) {
+                .navbar {
+                    position: relative;
+                }
+                #join-link {
+                    width: 18%;
+                    margin: auto;
+                }
+                .intro-txt p {
+                    font-size: 20px;
+                }
+                .navbar-links {
+                    display: none;
+                    width: 100%;
+                }
+                .navbar .nav-con {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .navbar-links ul {
+                    width: 100%;
+                    flex-direction: column;
+                }
+                .navbar-links li {
+                    text-align: center;
+                }
+                .navbar-links ul li a {
+                    padding: .5rem 1rem;
+                }
+                .navbar-links.active {
+                    display: flex;
+                }
+                .txt p {
+                    font-size: 18px;
+                }
+                @media screen and (max-width: 706px) {
+                    main {
+                        width: 100%;
+                    }
+                    .intro-flex {
+                        flex-direction: column;
+                    }
+                    .intro-box {
+                        width: 80%;
+                    }
+                    .intro-txt {
+                        width: 100%;
+                    }
+                    .intro-txt {
+                        margin: 0;
+                    }
+                    .box-con {
+                        flex-direction: column;
+                    }
+                    .box {
+                        width: 80%;
+                    }
+                    footer {
+                        padding: 2em;
+                    }
+                    .footer-div {
+                        width: 100%;
+                    }
+                }
+                @media screen and (max-width: 750px) {
+                    footer {
+                        padding: 3em;
+                    }
+                    .footer-div {
+                        width: 95%;
+                        margin: auto;
+                    }
+                    .footer-items {
+                        justify-content: space-around;
+                    }
+                    .footer-item {
+                        width: 30%;
+                    }
+                }
+                @media screen and (max-width: 656px) {
+                    #join-link {
+                        width: 30%;
+                    }
+                    footer {
+                        padding: 2em;
+                    }
+                    .footer-item {
+                        width: 50%;
+                    }
+                }
+                @media (max-width: 430px) {
+                    .box {
+                        width: 100%;
+                    }
+                    footer {
+                        padding: 0.5rem;
+                    }
+                }
+                @media (max-width: 400px) {
+                    .footer-div {
+                        width: 95%;
+                        margin: auto;
+                    }
+                    .footer-item {
+                        width: 100%;
+                    }
+                    footer {
+                        padding: 1em;
+                    }
+                }
+                @media screen and (max-width: 330px) {
+                    .brand-title img {
+                        width: 85%;
+                        float: auto;
+                    }
+                }
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="menu-wrap">
+            <input type="checkbox" class="toggler">
+            <div class="hamburger">
+                <div></div>
+            </div>
+            <div class="menu">
+                <div>
+                    <div>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Contacts</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-con">
+                    <div class="brand-title">
+                        <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581788400/TEEC1_q7rig0.jpg" alt="Logo" width="500px">
+                    </div>
+                </div>
+
+
+
+            </div>
+        </nav>
+
+
+
+
+        <!--================================================================================= Main ======================================-->
+        <main>
+            <div class="show-case">
+                <div class="intro-div">
+                    <div class="intro-flex">
+                        <div class="intro-box">
+                            <div class="intro-txt">
+                                <h1>Technical and Entrepreneurship Centre</h1>
+                                <p></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="projects">
+                <div class="project-con" id="no-margin">
+                    <div class="box-con">
+                        <div class="box">
+                            <div class="gate-img-div">
+                                <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581788388/IMG-20200210-WA0009_hxqgbm.jpg" width="500px" height="400px" alt="Image of Coconut Production ">
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div>
+                                <div>
+                                    <h2>Coconut oil Production </h2>
+                                </div>
+                                <div class="txt">
+                                    <p>A resident management system built with Laravel and Flutter aiding residents and estates to control who has access to their spaces. It features visit scheduling, visitor confirmation and a sevvice directory.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div>
+                            <h2>Air freshner Production</h2>
+                        </div>
+                        <div class="txt">
+                            <p>A mobile story app to keep the kids engaged built for Android. Get amazing stories that have been vetted to read to your kids, including intelligently suggestions based on what you already enjoy.</p>
+                        </div>
+
+                    </div>
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581788383/IMG-20200211-WA0009_s26iis.jpg" height="400px" alt="Image of Air freshener">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581788386/IMG-20200212-WA0013_qmuu1h.jpg" height="400px" alt="Image of Bar soap">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Bar Soap Making </h2>
+                        </div>
+                        <div class="txt">
+                            <p>A url shortner built with with Nodejs. Make custom short urls for your links. Share to social media and get awesome previews. Set an expiration date for your links.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            </script>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div>
+                            <h2>Barbing </h2>
+                        </div>
+                        <div class="txt">
+                            <p>A contact manager built in PHP. Manage large numbers of contacts easily. Easily send mass broadcasts.</p>
+                        </div>
+
+                    </div>
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581788625/5923396_KehindeOnaopemipoAdeola_jpg070f880f464b422cf8df1574211a7b89_px89nw.jpg" height="490px" alt="Image of Trim.ng">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581789107/IMG-20190124-WA0001_qrn0z6.jpg" alt="Image of Trim.ng">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Tailoring</h2>
+                        </div>
+                        <div class="txt">
+                            <p>Buitlt with Laravel, Lancers is a web app for creating invoices and managing projects. Easily estimate the best prices for your projects. Email invoices to clients and recieve payments. Generate contracts from a variety of
+                                templates and get notified once your client has signed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div>
+                            <h2>Busicuit</h2>
+                        </div>
+                        <div class="txt">
+                            <p>Buitlt with Laravel, Lancers is a web app for creating invoices and managing projects. Easily estimate the best prices for your projects. Email invoices to clients and recieve payments. Generate contracts from a variety of
+                                templates and get notified once your client has signed.</p>
+                        </div>
+                        <div class="btn-area">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581789615/bus_navy9y.jpg" alt="Image of Trim.ng">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581789973/woodwork-craft-side-stool_ihyxcx.jpg" alt="Image of Trim.ng">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Wood Work</h2>
+                        </div>
+                        <div class="txt">
+                            <p>FInd convenient parking anywhere you are. Built with Laravel, CarPark helps you book parking in advance, pay online and find parking closeby. Don’t worry about safety or availability ever again.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div>
+                            <h2>Interlocking</h2>
+                        </div>
+                        <div class="txt">
+                            <p>Built with Nodejs and React, xShare enables seamless file sharing. Upload any file and make it available to anyone anywhere with a link, or send an email to anyone directly from the app.</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581790570/5742160_howtostartinterlockingpavingstoneproductionbusinessinnigeria_jpega0a09d29d7539886d3655a24fa944a1e_slzmwh.jpg" alt="Image of xShare">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581790571/Deploying-QuickBooks-For-A-Poultry-Farmers_pzm3oh.jpg" alt="Image of HNG Board">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Poultry</h2>
+                        </div>
+                        <div class="txt">
+                            <p>Manage large amounts of learners, effectively create teams and tasks with HNG Board. Built using Oracle JET and Laravel, this app enables you to effectively teach and evaluate students.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div>
+                            <h2>Video making</h2>
+                        </div>
+                        <div class="txt">
+                            <p>The website for the 7th run of the HNG internship was also built by our interns with Laravel.</p>
+                        </div>
+
+                    </div>
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581793977/unnamed_zyqs8n.png" alt="Image of HNG Board">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581793929/Ocean-Digits-Academy_f8z0w5.jpg" alt="Image of Wikipoli">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div>
+                            <h2>Java programming</h2>
+                        </div>
+                        <div class="txt">
+                            <p>Built with Laravel, Wikipoll gives you information about your candidates. Search for candidates in your election to learn more about them. Contribute your own thoughts.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-con">
+                <div class="box-con">
+                    <div class="box">
+                        <div>
+                            <h2>Beske production</h2>
+                        </div>
+                        <div class="txt">
+                            <p>Built with Nodejs, itarj.com helps you confirm the vailidity of interview invitations. Search terms to find posts about companies. Make a post and recieve advice from the community. Don’t go for that interview until you’re
+                                sure it’s real.</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="gate-img-div">
+                            <img src="https://res.cloudinary.com/joshualoni2/image/upload/v1581793937/Tofu-pic-23_kjq2z9.jpg" alt="Image of isthisarealobj">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </main>
+
+        <footer>
+            <div class="footer-div">
+                <div class="inner-footer">
+                    <div class="footer-items">
+                        <div class="footer-item">
+                            <div>
+                                <h2>Quick Links</h2>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li><a href="">Join T.E.C</a></li>
+                                    <li><a href="">About T.E.C</a></li>
+                                    <li><a href="">Meet the Team</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="footer-item">
+                            <div>
+                                <h2>Contact Us</h2>
+                            </div>
+                            <div id="black">
+                                <ul>
+                                    <li>
+                                        <a href="tel:+2348108483222">
+                                            <strong>
+                        Phone: <br />
+                    </strong> +234 810 848 3222
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:">
+                                            <strong>
+                        Email: <br />
+                    </strong>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <div>
+                                <h2>Office Address</h2>
+                            </div>
+                            <div id="black-txt">
+                                <p>
+                                    <a href="https://www.google.com/maps/place/Hotels.ng/@6.5091808,3.3795046,17z/data=!4m13!1m7!3m6!1s0x103b8cf61c9c63c5:0xb2ef3a96e7eb315e!2s3+yirrel+Ave,+Yaba+100001,+Lagos!3b1!8m2!3d6.5091808!4d3.3795046!3m4!1s0x103b8c58aa4e0931:0x9ddabc4518c15d14!8m2!3d6.5091808!4d3.3795046">Technical and Enterprenurship Center <br/> University Of Ilorin<br />Kwara State</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <div>
+                                <h2>Follow us</h2>
+                            </div>
+                            <div class="social-media-icons">
+                                <div>
+                                    <a href="https://plus.goggle.com/u/O/+TheUNILORINNigeria"><i class="fa fa-google-plus"></i></a>
+                                </div>
+                                <div>
+                                    <a href="https://www.facebook.com/UniversityOfIlorin"><i class="fa fa-facebook"></i></a>
+                                </div>
+                                <div>
+                                    <a href="https://twitter.com/unilorinnews"><i class="fa fa-twitter"></i></a>
+                                </div>
+                                <div>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="copyright-div">
+
+                        <div>
+                            <p>
+                                Copyright &copy;
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved GSE Group 14
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+
+    </html>
